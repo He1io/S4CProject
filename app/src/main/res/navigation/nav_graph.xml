@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/socialActionSummaryFragment">
+
+    <fragment
+        android:id="@+id/socialActionSummaryFragment"
+        android:name="com.he1io.s4cproject.SocialActionSummaryFragment"
+        android:label="">
+        <action
+            android:id="@+id/action_socialActionSummaryFragment_to_loginDialogFragment"
+            app:destination="@id/loginDialogFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginDialogFragment"
+        android:name="com.he1io.s4cproject.LoginDialogFragment"
+        android:label="LoginDialogFragment" >
+        <action
+            android:id="@+id/action_loginDialogFragment_to_socialActionSummaryFragment2"
+            app:destination="@id/socialActionSummaryFragment" />
+    </fragment>
+</navigation>
