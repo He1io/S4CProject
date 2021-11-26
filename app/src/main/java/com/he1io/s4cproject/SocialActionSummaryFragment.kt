@@ -49,6 +49,11 @@ class SocialActionSummaryFragment : Fragment() {
                         SocialActionSummaryFragmentDirections.actionSocialActionSummaryFragmentToLoginDialogFragment()
                     findNavController().navigate(action) }
                 }
+
+            fabAddSocialAction.setOnClickListener {
+                val action = SocialActionSummaryFragmentDirections.actionSocialActionSummaryFragmentToSocialActionAddFragment()
+                findNavController().navigate(action)
+            }
         }
     }
 }

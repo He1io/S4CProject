@@ -5,15 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "social_action")
-class SocialAction (
-    /**
-     * Con la clave autoGenerate no consigo recuperar la ID después de insertar, en la documentación
-     * dice que el @Insert puede devolver Long pero no lo consigo...
-     * Así que creo manualmente la id y la guardo en una variable
-     */
-    @PrimaryKey //(autoGenerate = true)
-    @ColumnInfo(name = "id")
-    val id: Int = 0,
+data class SocialAction (
     @ColumnInfo(name = "name")
     val name: String,
     @ColumnInfo(name = "year")
@@ -32,4 +24,9 @@ class SocialAction (
     val region: String,
     @ColumnInfo(name = "administration")
     val administration: String
-    )
+    ){
+    @PrimaryKey //(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    var id: String = ""
+}
+

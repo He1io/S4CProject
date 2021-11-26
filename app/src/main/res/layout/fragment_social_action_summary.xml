@@ -7,6 +7,17 @@
     android:layout_height="match_parent"
     android:layout_margin="@dimen/margin">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:padding="@dimen/margin"
+        android:id="@+id/rv_social_action"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:clipToPadding="false"/>
+
     <Button
         android:id="@+id/bt_login"
         android:layout_width="wrap_content"
@@ -15,4 +26,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:text="@string/login"
         android:drawableStart="@drawable/ic_user"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add_social_action"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin"
+        android:layout_marginBottom="@dimen/margin"
+        android:src="@drawable/ic_add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@android:color/white" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

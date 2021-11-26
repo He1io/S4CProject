@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_socialActionSummaryFragment_to_loginDialogFragment"
             app:destination="@id/loginDialogFragment" />
+        <action
+            android:id="@+id/action_socialActionSummaryFragment_to_socialActionAddFragment"
+            app:destination="@id/socialActionAddFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginDialogFragment"
@@ -19,6 +22,14 @@
         android:label="LoginDialogFragment" >
         <action
             android:id="@+id/action_loginDialogFragment_to_socialActionSummaryFragment2"
+            app:destination="@id/socialActionSummaryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/socialActionAddFragment"
+        android:name="com.he1io.s4cproject.SocialActionAddFragment"
+        android:label="SocialActionAddFragment" >
+        <action
+            android:id="@+id/action_socialActionAddFragment_to_socialActionSummaryFragment"
             app:destination="@id/socialActionSummaryFragment" />
     </fragment>
 </navigation>

@@ -4,9 +4,12 @@
     <string name="password">Contraseña (6 caracteres min.)</string>
     <string name="login">Iniciar Sesión</string>
     <string name="signup">Registrarse</string>
+    <string name="save_question">¿Guardar esta acción social?</string>
+    <string name="add_social_action_message">Acción social añadida</string>
     <!-- Error messages -->
     <string name="email_null_error">Introduzca un correo electrónico</string>
     <string name="email_bad_format">Formato incorrecto</string>
     <string name="password_null_error">Introduzca una contraseña</string>
     <string name="minimum_characters_error">La contraseña debe tener al menos 6 caracteres</string>
+
 </resources>
