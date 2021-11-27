@@ -88,12 +88,11 @@ class FirestoreViewModel : ViewModel(){
             Log.e(TAG,"Error al editar la acción social!")
         }
     }
-/*
-    // delete an address from firebase
-    fun deleteAddress(addressItem: AddressItem){
-        firebaseRepository.deleteAddress(addressItem).addOnFailureListener {
-            Log.e(TAG,"Failed to delete Address")
+
+    fun deleteSocialAction(socialActionId: String){
+        firebaseRepository.deleteSocialAction(socialActionId).addOnFailureListener {
+            Log.e(TAG,"Error al borrar la acción social!")
         }
     }
-*/
+
 }

@@ -3,6 +3,7 @@
     <string name="email">Correo electrónico</string>
     <string name="password">Contraseña (6 caracteres min.)</string>
     <string name="save_question">¿Guardar cambios?</string>
+    <string name="delete_question">¿Eliminar acción social?</string>
     <string name="add_social_action_message">Acción social añadida</string>
     <string name="edit_social_action_message">Acción social modificada</string>
     <string name="delete_social_action_message">Acción social eliminada</string>

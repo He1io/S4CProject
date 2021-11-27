@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -17,6 +19,7 @@ import com.he1io.s4cproject.ui.viewmodel.FirestoreViewModel
 import com.he1io.s4cproject.R
 import com.he1io.s4cproject.databinding.FragmentSocialActionSummaryBinding
 import com.he1io.s4cproject.databinding.LayoutBottomSheetBinding
+import com.he1io.s4cproject.util.Mode
 
 class SocialActionSummaryFragment : Fragment() {
 
@@ -27,7 +30,7 @@ class SocialActionSummaryFragment : Fragment() {
 
     private lateinit var adapter: CustomAdapter
 
-    val firestoreViewModel = FirestoreViewModel()
+    private val firestoreViewModel = FirestoreViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -67,6 +70,10 @@ class SocialActionSummaryFragment : Fragment() {
                     goToAddSocialActionFragment(currentAction.id)
                     bottomSheetDialog.dismiss()
                 }
+                bottomSheetView.btDelete.setOnClickListener{
+                    showDeleteConfirmationDialog(currentAction.id)
+                    bottomSheetDialog.dismiss()
+                }
 
             }
             binding.rvSocialAction.adapter = adapter
@@ -102,5 +109,23 @@ class SocialActionSummaryFragment : Fragment() {
         val action =
             SocialActionSummaryFragmentDirections.actionSocialActionSummaryFragmentToSocialActionAddFragment(socialActionId)
         findNavController().navigate(action)
+    }
+
+    private fun showDeleteConfirmationDialog(socialActionId: String) {
+
+        MaterialAlertDialogBuilder(requireContext())
+            .setMessage(getString(R.string.delete_question))
+            .setCancelable(false)
+            .setNegativeButton("Cancelar") { _, _ -> }
+            .setPositiveButton("Confirmar") { _, _ ->
+
+                        firestoreViewModel.deleteSocialAction(socialActionId)
+                        Toast.makeText(
+                            requireContext(),
+                            getString(R.string.delete_social_action_message),
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+            }.show()
     }
 }

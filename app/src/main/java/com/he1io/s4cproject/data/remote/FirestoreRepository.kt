@@ -31,12 +31,9 @@ class FirestoreRepository {
     fun editSocialAction(socialAction: SocialAction): Task<Void> {
         return firestoreDB.collection("social_action").document(socialAction.id).set(socialAction)
     }
-/*
-    fun deleteAddress(addressItem: AddressItem): Task<Void> {
-        var documentReference =  firestoreDB.collection("users/${user!!.email.toString()}/saved_addresses")
-            .document(addressItem.addressId)
 
-        return documentReference.delete()
+    fun deleteSocialAction(socialActionId: String): Task<Void> {
+        return firestoreDB.collection("social_action").document(socialActionId).delete()
     }
-*/
+
 }

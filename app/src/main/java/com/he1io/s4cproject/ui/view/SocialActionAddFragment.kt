@@ -115,8 +115,6 @@ class SocialActionAddFragment : Fragment() {
                         ).show()
                     }
                 }
-
-                // saveSocialAction(bindSocialAction())
                 this.findNavController().navigateUp()
             }.show()
     }
