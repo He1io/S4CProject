@@ -2,8 +2,6 @@
     <string name="app_name">S4CProject</string>
     <string name="email">Correo electrónico</string>
     <string name="password">Contraseña (6 caracteres min.)</string>
-    <string name="login">Iniciar Sesión</string>
-    <string name="signup">Registrarse</string>
     <string name="save_question">¿Guardar esta acción social?</string>
     <string name="add_social_action_message">Acción social añadida</string>
     <!-- Error messages -->
@@ -11,5 +9,10 @@
     <string name="email_bad_format">Formato incorrecto</string>
     <string name="password_null_error">Introduzca una contraseña</string>
     <string name="minimum_characters_error">La contraseña debe tener al menos 6 caracteres</string>
-
+    <!-- Buttons -->
+    <string name="login">Iniciar Sesión</string>
+    <string name="signup">Registrarse</string>
+    <string name="show">Mostrar</string>
+    <string name="edit">Editar</string>
+    <string name="delete">Borrar</string>
 </resources>

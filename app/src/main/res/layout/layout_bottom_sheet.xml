@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottomSheetContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bottom_sheet_bg"
+    android:padding="@dimen/margin">
+
+    <TextView
+        android:id="@+id/tv_social_action_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Hola"/>
+
+    <Button
+        android:id="@+id/bt_show"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_between_elements"
+        app:layout_constraintTop_toBottomOf="@id/tv_social_action_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/bt_edit"
+        android:text="@string/show"/>
+
+    <Button
+        android:id="@+id/bt_edit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_between_elements"
+        android:layout_marginEnd="@dimen/margin_between_elements"
+        app:layout_constraintTop_toBottomOf="@id/tv_social_action_name"
+        app:layout_constraintStart_toEndOf="@id/bt_show"
+        app:layout_constraintEnd_toStartOf="@id/bt_delete"
+        android:text="@string/edit"/>
+
+    <Button
+        android:id="@+id/bt_delete"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_between_elements"
+        app:layout_constraintTop_toBottomOf="@id/tv_social_action_name"
+        app:layout_constraintStart_toEndOf="@id/bt_edit"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/delete"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -14,6 +16,7 @@ import com.he1io.s4cproject.util.CustomAdapter
 import com.he1io.s4cproject.ui.viewmodel.FirestoreViewModel
 import com.he1io.s4cproject.R
 import com.he1io.s4cproject.databinding.FragmentSocialActionSummaryBinding
+import com.he1io.s4cproject.databinding.LayoutBottomSheetBinding
 
 class SocialActionSummaryFragment : Fragment() {
 
@@ -48,7 +51,23 @@ class SocialActionSummaryFragment : Fragment() {
         // val adapter = SocialActionListAdapter()
         firestoreViewModel.getSavedSocialActions().observe(this.viewLifecycleOwner) {
             // adapter.submitList(it)
-            adapter = CustomAdapter(it)
+            adapter = CustomAdapter(it){
+                val bottomSheetDialog = BottomSheetDialog(
+                    requireActivity(),
+                    R.style.BottomSheetDialogTheme
+                )
+                val bottomSheetView = LayoutBottomSheetBinding.inflate(LayoutInflater.from(context))
+                bottomSheetDialog.setContentView(bottomSheetView.root)
+                bottomSheetDialog.show()
+                /*
+                bottomSheetView.btShow.setOnClickListener{
+                    val action =
+                        SocialActionSummaryFragmentDirections.actionSocialActionSummaryFragmentToLoginDialogFragment()
+                    findNavController().navigate(action)
+                    bottomSheetDialog.dismiss()
+                }
+                */
+            }
             binding.rvSocialAction.adapter = adapter
             binding.rvSocialAction.layoutManager = LinearLayoutManager(context)
         }
