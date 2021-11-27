@@ -1,7 +1,8 @@
-package com.he1io.s4cproject
+package com.he1io.s4cproject.data.local
 
 import androidx.room.Dao
 import androidx.room.Query
+import com.he1io.s4cproject.data.model.SocialAction
 
 @Dao
 interface SocialActionDao {

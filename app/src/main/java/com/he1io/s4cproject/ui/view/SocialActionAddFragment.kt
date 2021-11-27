@@ -1,4 +1,4 @@
-package com.he1io.s4cproject
+package com.he1io.s4cproject.ui.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +10,9 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.he1io.s4cproject.ui.viewmodel.FirestoreViewModel
+import com.he1io.s4cproject.R
+import com.he1io.s4cproject.data.model.SocialAction
 import com.he1io.s4cproject.databinding.FragmentSocialActionAddBinding
 
 class SocialActionAddFragment : Fragment() {
@@ -56,14 +59,15 @@ class SocialActionAddFragment : Fragment() {
             .setCancelable(false)
             .setNegativeButton("Cancelar") { _, _ -> }
             .setPositiveButton("Confirmar") { _, _ ->
-
-                saveSocialAction(bindSocialAction())
+                val firestoreViewModel = FirestoreViewModel()
+                firestoreViewModel.saveSocialActionToFirebase(bindSocialAction())
+                // saveSocialAction(bindSocialAction())
                 Toast.makeText(requireContext(), getString(R.string.add_social_action_message), Toast.LENGTH_SHORT).show()
                 this.findNavController().navigateUp()
             }.show()
     }
 
-    private fun bindSocialAction(): SocialAction{
+    private fun bindSocialAction(): SocialAction {
         //TODO: Qué hacer con la ID? Se generará sola pero la tendré que guardar para poder hacer GET
         binding.apply {
             return SocialAction(

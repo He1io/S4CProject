@@ -1,4 +1,4 @@
-package com.he1io.s4cproject
+package com.he1io.s4cproject.ui.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,9 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.he1io.s4cproject.util.CustomAdapter
+import com.he1io.s4cproject.ui.viewmodel.FirestoreViewModel
+import com.he1io.s4cproject.R
 import com.he1io.s4cproject.databinding.FragmentSocialActionSummaryBinding
 
 class SocialActionSummaryFragment : Fragment() {
@@ -17,6 +21,8 @@ class SocialActionSummaryFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var auth: FirebaseAuth
+
+    private lateinit var adapter: CustomAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,7 +44,18 @@ class SocialActionSummaryFragment : Fragment() {
             binding.btLogin.text = currentUser.email
         }
 
+        val firestoreViewModel = FirestoreViewModel()
+        // val adapter = SocialActionListAdapter()
+        firestoreViewModel.getSavedSocialActions().observe(this.viewLifecycleOwner) {
+            // adapter.submitList(it)
+            adapter = CustomAdapter(it)
+            binding.rvSocialAction.adapter = adapter
+            binding.rvSocialAction.layoutManager = LinearLayoutManager(context)
+        }
+
         binding.apply {
+            // rvSocialAction.adapter = adapter
+            // rvSocialAction.layoutManager = LinearLayoutManager(context)
             btLogin.setOnClickListener {
                 if (currentUser != null){
                     auth.signOut()

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/socialActionSummaryFragment"
-        android:name="com.he1io.s4cproject.SocialActionSummaryFragment"
+        android:name="com.he1io.s4cproject.ui.view.SocialActionSummaryFragment"
         android:label="">
         <action
             android:id="@+id/action_socialActionSummaryFragment_to_loginDialogFragment"
@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginDialogFragment"
-        android:name="com.he1io.s4cproject.LoginDialogFragment"
+        android:name="com.he1io.s4cproject.ui.view.LoginDialogFragment"
         android:label="LoginDialogFragment" >
         <action
             android:id="@+id/action_loginDialogFragment_to_socialActionSummaryFragment2"
@@ -26,7 +26,7 @@
     </fragment>
     <fragment
         android:id="@+id/socialActionAddFragment"
-        android:name="com.he1io.s4cproject.SocialActionAddFragment"
+        android:name="com.he1io.s4cproject.ui.view.SocialActionAddFragment"
         android:label="SocialActionAddFragment" >
         <action
             android:id="@+id/action_socialActionAddFragment_to_socialActionSummaryFragment"

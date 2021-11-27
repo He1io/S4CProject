@@ -1,4 +1,4 @@
-package com.he1io.s4cproject
+package com.he1io.s4cproject.ui.view
 
 import android.content.ContentValues.TAG
 import android.os.Bundle
@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.he1io.s4cproject.R
 import com.he1io.s4cproject.databinding.FragmentLoginDialogBinding
 
 class LoginDialogFragment : Fragment() {

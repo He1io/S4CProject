@@ -1,4 +1,4 @@
-package com.he1io.s4cproject
+package com.he1io.s4cproject.data.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

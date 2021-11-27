@@ -1,9 +1,10 @@
-package com.he1io.s4cproject
+package com.he1io.s4cproject.data.local
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.he1io.s4cproject.data.model.SocialAction
 
 
 @Database(entities = [SocialAction::class], version = 1, exportSchema = false)
