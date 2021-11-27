@@ -27,6 +27,8 @@ class SocialActionSummaryFragment : Fragment() {
 
     private lateinit var adapter: CustomAdapter
 
+    val firestoreViewModel = FirestoreViewModel()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -43,15 +45,15 @@ class SocialActionSummaryFragment : Fragment() {
         auth = Firebase.auth
         var currentUser = auth.currentUser
         // Si el usuario ya está logeado, mostramos su e-mail en vez de "Log in"
-        if (currentUser != null){
+        if (currentUser != null) {
             binding.btLogin.text = currentUser.email
         }
 
-        val firestoreViewModel = FirestoreViewModel()
+
         // val adapter = SocialActionListAdapter()
         firestoreViewModel.getSavedSocialActions().observe(this.viewLifecycleOwner) {
             // adapter.submitList(it)
-            adapter = CustomAdapter(it){
+            adapter = CustomAdapter(it) {currentAction ->
                 val bottomSheetDialog = BottomSheetDialog(
                     requireActivity(),
                     R.style.BottomSheetDialogTheme
@@ -59,14 +61,13 @@ class SocialActionSummaryFragment : Fragment() {
                 val bottomSheetView = LayoutBottomSheetBinding.inflate(LayoutInflater.from(context))
                 bottomSheetDialog.setContentView(bottomSheetView.root)
                 bottomSheetDialog.show()
-                /*
-                bottomSheetView.btShow.setOnClickListener{
-                    val action =
-                        SocialActionSummaryFragmentDirections.actionSocialActionSummaryFragmentToLoginDialogFragment()
-                    findNavController().navigate(action)
+
+                bottomSheetView.tvSocialActionName.text = currentAction.name
+                bottomSheetView.btEdit.setOnClickListener{
+                    goToAddSocialActionFragment(currentAction.id)
                     bottomSheetDialog.dismiss()
                 }
-                */
+
             }
             binding.rvSocialAction.adapter = adapter
             binding.rvSocialAction.layoutManager = LinearLayoutManager(context)
@@ -76,20 +77,30 @@ class SocialActionSummaryFragment : Fragment() {
             // rvSocialAction.adapter = adapter
             // rvSocialAction.layoutManager = LinearLayoutManager(context)
             btLogin.setOnClickListener {
-                if (currentUser != null){
+                if (currentUser != null) {
                     auth.signOut()
                     currentUser = null
                     btLogin.text = getString(R.string.login)
                 } else {
-                    val action =
-                        SocialActionSummaryFragmentDirections.actionSocialActionSummaryFragmentToLoginDialogFragment()
-                    findNavController().navigate(action) }
+                    goToLogInFragment()
                 }
+            }
 
             fabAddSocialAction.setOnClickListener {
-                val action = SocialActionSummaryFragmentDirections.actionSocialActionSummaryFragmentToSocialActionAddFragment()
-                findNavController().navigate(action)
+                goToAddSocialActionFragment("") // ID vacía porque vamos a crear una nueva
             }
         }
+    }
+
+    private fun goToLogInFragment() {
+        val action =
+            SocialActionSummaryFragmentDirections.actionSocialActionSummaryFragmentToLoginDialogFragment()
+        findNavController().navigate(action)
+    }
+
+    private fun goToAddSocialActionFragment(socialActionId: String){
+        val action =
+            SocialActionSummaryFragmentDirections.actionSocialActionSummaryFragmentToSocialActionAddFragment(socialActionId)
+        findNavController().navigate(action)
     }
 }

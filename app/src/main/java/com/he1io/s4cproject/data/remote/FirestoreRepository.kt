@@ -3,6 +3,7 @@ package com.he1io.s4cproject.data.remote
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.he1io.s4cproject.data.model.SocialAction
 
@@ -10,11 +11,16 @@ import com.he1io.s4cproject.data.model.SocialAction
 class FirestoreRepository {
 
     val TAG = "FIREBASE_REPOSITORY"
-    var firestoreDB = FirebaseFirestore.getInstance()
-    var user = FirebaseAuth.getInstance().currentUser
+    val firestoreDB = FirebaseFirestore.getInstance()
 
+    fun getSocialActionById(socialActionId: String): DocumentReference {
+        return firestoreDB.collection("social_action").document(socialActionId)
+    }
 
-    // save address to firebase
+    fun getSavedSocialActions(): CollectionReference {
+        return firestoreDB.collection("social_action")
+    }
+
     fun saveSocialAction(socialAction: SocialAction): Task<Void> {
         //var
         var documentReference = firestoreDB.collection("social_action").document()
@@ -22,10 +28,8 @@ class FirestoreRepository {
         return documentReference.set(socialAction)
     }
 
-    // get saved addresses from firebase
-    fun getSavedSocialActions(): CollectionReference {
-        var collectionReference = firestoreDB.collection("social_action")
-        return collectionReference
+    fun editSocialAction(socialAction: SocialAction): Task<Void> {
+        return firestoreDB.collection("social_action").document(socialAction.id).set(socialAction)
     }
 /*
     fun deleteAddress(addressItem: AddressItem): Task<Void> {

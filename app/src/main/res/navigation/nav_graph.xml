@@ -31,5 +31,8 @@
         <action
             android:id="@+id/action_socialActionAddFragment_to_socialActionSummaryFragment"
             app:destination="@id/socialActionSummaryFragment" />
+        <argument
+            android:name="social_action_id"
+            app:argType="string" />
     </fragment>
 </navigation>
