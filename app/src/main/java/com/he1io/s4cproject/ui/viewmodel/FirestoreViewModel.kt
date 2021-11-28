@@ -1,12 +1,16 @@
 package com.he1io.s4cproject.ui.viewmodel
 
 import android.util.Log
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.firebase.firestore.EventListener
+import com.he1io.s4cproject.data.local.S4CApplication
 import com.he1io.s4cproject.data.remote.FirestoreRepository
 import com.he1io.s4cproject.data.model.SocialAction
+import kotlinx.coroutines.launch
 
 
 class FirestoreViewModel : ViewModel() {
@@ -33,7 +37,6 @@ class FirestoreViewModel : ViewModel() {
                 /* "document.toObject<SocialAction>()" debería funcionar pero supongo que falla porque
                     el documento de firestore tiene el campo ID y en el constructor de SocialAction no lo tengo
                  */
-
                 val socialAction = SocialAction(
                     document.data["name"].toString(),
                     document.data["year"].toString().toInt(),
@@ -50,6 +53,7 @@ class FirestoreViewModel : ViewModel() {
             }
             savedSocialActions.value = savedSocialActionsList
         })
+
 
         return savedSocialActions
     }

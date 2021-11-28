@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -13,9 +16,13 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.he1io.s4cproject.ui.viewmodel.FirestoreViewModel
 import com.he1io.s4cproject.R
+import com.he1io.s4cproject.data.local.S4CApplication
 import com.he1io.s4cproject.data.model.SocialAction
 import com.he1io.s4cproject.databinding.FragmentSocialActionAddBinding
+import com.he1io.s4cproject.ui.viewmodel.RoomViewModel
+import com.he1io.s4cproject.ui.viewmodel.RoomViewModelFactory
 import com.he1io.s4cproject.util.Mode
+import kotlinx.coroutines.launch
 
 class SocialActionAddFragment : Fragment() {
 
@@ -24,8 +31,12 @@ class SocialActionAddFragment : Fragment() {
     private var _binding: FragmentSocialActionAddBinding? = null
     private val binding get() = _binding!!
 
-    private val db = Firebase.firestore
     private val firestoreViewModel = FirestoreViewModel()
+    private val roomViewModel: RoomViewModel by activityViewModels {
+        RoomViewModelFactory(
+            (activity?.application as S4CApplication).database.socialActionDao()
+        )
+    }
 
     private lateinit var mode: Mode
 
@@ -46,7 +57,7 @@ class SocialActionAddFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         socialActionId = navigationArgs.socialActionId
-        mode = if (socialActionId.isNullOrBlank()) Mode.INSERT else Mode.UPDATE
+        mode = if (socialActionId.isBlank()) Mode.INSERT else Mode.UPDATE
 
         if (mode == Mode.UPDATE) {
             firestoreViewModel.getSocialActionById(socialActionId).observe(viewLifecycleOwner) {
@@ -66,8 +77,56 @@ class SocialActionAddFragment : Fragment() {
 
 
     private fun isSocialActionValid(): Boolean {
-        //TODO: Comprobar todas las validaciones
-        return true
+        var isValid = true
+
+        when {
+            binding.etSocialActionName.text.toString().isBlank() -> {
+                binding.etSocialActionName.error = getString(R.string.required_field_error)
+                isValid = false
+            }
+
+            binding.etSocialActionYear.text.toString().isBlank() -> {
+                binding.etSocialActionYear.error = getString(R.string.required_field_error)
+                isValid = false
+            }
+
+            binding.etSocialActionMode.text.toString().isBlank() -> {
+                binding.etSocialActionMode.error = getString(R.string.required_field_error)
+                isValid = false
+            }
+
+            binding.etSocialActionProject.text.toString().isBlank() -> {
+                binding.etSocialActionProject.error = getString(R.string.required_field_error)
+                isValid = false
+            }
+
+            binding.etSocialActionSubvention.text.toString().isBlank() -> {
+                binding.etSocialActionSubvention.error = getString(R.string.required_field_error)
+                isValid = false
+            }
+
+            binding.etSocialActionSpending.text.toString().isBlank() -> {
+                binding.etSocialActionSpending.error = getString(R.string.required_field_error)
+                isValid = false
+            }
+
+            binding.etSocialActionCountry.text.toString().isBlank() -> {
+                binding.etSocialActionCountry.error = getString(R.string.required_field_error)
+                isValid = false
+            }
+
+            binding.etSocialActionRegion.text.toString().isBlank() -> {
+                binding.etSocialActionRegion.error = getString(R.string.required_field_error)
+                isValid = false
+            }
+
+            binding.etSocialActionAdministration.text.toString().isBlank() -> {
+                binding.etSocialActionAdministration.error = getString(R.string.required_field_error)
+                isValid = false
+            }
+        }
+
+        return isValid
     }
 
 
@@ -105,7 +164,6 @@ class SocialActionAddFragment : Fragment() {
     }
 
     private fun parseSocialAction(): SocialAction {
-        //TODO: Qué hacer con la ID? Se generará sola pero la tendré que guardar para poder hacer GET
         binding.apply {
             return SocialAction(
                 etSocialActionName.text.toString(),

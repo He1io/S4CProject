@@ -9,13 +9,26 @@
     <string name="delete_social_action_message">Acción social eliminada</string>
     <!-- Error messages -->
     <string name="email_null_error">Introduzca un correo electrónico</string>
-    <string name="email_bad_format">Formato incorrecto</string>
+    <string name="email_format_error">Formato incorrecto</string>
     <string name="password_null_error">Introduzca una contraseña</string>
     <string name="minimum_characters_error">La contraseña debe tener al menos 6 caracteres</string>
+
+    <string name="required_field_error">Campo obligatorio</string>
     <!-- Buttons -->
-    <string name="login">Iniciar Sesión</string>
-    <string name="signup">Registrarse</string>
-    <string name="show">Mostrar</string>
-    <string name="edit">Editar</string>
-    <string name="delete">Borrar</string>
+    <string name="login_button">Iniciar Sesión</string>
+    <string name="logout_button">Cerrar Sesión</string>
+    <string name="signup_button">Registrarse</string>
+    <string name="show_button">Mostrar</string>
+    <string name="edit_button">Editar</string>
+    <string name="delete_button">Borrar</string>
+    <!-- Hints -->
+    <string name="name_hint">Nombre</string>
+    <string name="year_hint">Año</string>
+    <string name="mode_hint">Modalidad</string>
+    <string name="project_hint">Proyecto</string>
+    <string name="subvention_hint">Subvención</string>
+    <string name="spending_hint">Gasto</string>
+    <string name="country_hint">País</string>
+    <string name="region_hint">Región</string>
+    <string name="administration_hint">Administración</string>
 </resources>

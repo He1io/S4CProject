@@ -7,8 +7,8 @@ import androidx.room.RoomDatabase
 import com.he1io.s4cproject.data.model.SocialAction
 
 
-@Database(entities = [SocialAction::class], version = 1, exportSchema = false)
-abstract class RoomDatabase: RoomDatabase() {
+@Database(entities = [SocialAction::class], version = 2, exportSchema = false)
+abstract class SocialActionRoomDatabase: RoomDatabase() {
 
     abstract fun socialActionDao(): SocialActionDao
 
@@ -19,13 +19,13 @@ abstract class RoomDatabase: RoomDatabase() {
         un subproceso en INSTANCE son visibles de inmediato para todos los demás subprocesos
          */
         @Volatile
-        private var INSTANCE: RoomDatabase? = null
+        private var INSTANCE: SocialActionRoomDatabase? = null
 
-        fun getDatabase(context: Context): RoomDatabase{
+        fun getDatabase(context: Context): SocialActionRoomDatabase{
             return INSTANCE ?: synchronized(this){
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    RoomDatabase::class.java,
+                    SocialActionRoomDatabase::class.java,
                     "s4c_database"
                 )
                     .fallbackToDestructiveMigration()

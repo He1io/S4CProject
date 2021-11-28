@@ -1,6 +1,5 @@
 package com.he1io.s4cproject.ui.view
 
-import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,6 +15,10 @@ import com.he1io.s4cproject.R
 import com.he1io.s4cproject.databinding.FragmentLoginDialogBinding
 
 class LoginDialogFragment : Fragment() {
+
+    companion object {
+        private const val TAG = "LOGIN_DIALOG_FRAGMENT"
+    }
 
     private var _binding: FragmentLoginDialogBinding? = null
     private val binding get() = _binding!!
@@ -69,7 +72,7 @@ class LoginDialogFragment : Fragment() {
                             if (task.isSuccessful) {
                                goToSocialActionSummaryFragment()
                             } else {
-                                //TODO: Check existing user
+                                // TODO: Comprobar que intente registrar un usuario ya existente
                                 Log.w(TAG, "createUserWithEmail:failure", task.exception)
                                 Toast.makeText(
                                     requireContext(),
@@ -96,7 +99,7 @@ class LoginDialogFragment : Fragment() {
             // Comprobar formato del mail
             !android.util.Patterns.EMAIL_ADDRESS.matcher(binding.etEmail.text.toString())
                 .matches() -> {
-                binding.tilEmail.error = getString(R.string.email_bad_format)
+                binding.tilEmail.error = getString(R.string.email_format_error)
                 isValid = false
             }
 

@@ -63,7 +63,7 @@
         app:layout_constraintTop_toBottomOf="@id/tv_social_action_name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/bt_edit"
-        android:text="@string/show"/>
+        android:text="@string/show_button"/>
     -->
 
     <Button
@@ -76,7 +76,7 @@
         app:layout_constraintTop_toBottomOf="@id/tv_social_action_address"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/bt_delete"
-        android:text="@string/edit"/>
+        android:text="@string/edit_button"/>
 
     <Button
         android:id="@+id/bt_delete"
@@ -86,5 +86,5 @@
         app:layout_constraintTop_toTopOf="@id/bt_edit"
         app:layout_constraintStart_toEndOf="@id/bt_edit"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="@string/delete"/>
+        android:text="@string/delete_button"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
