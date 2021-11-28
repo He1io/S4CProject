@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "social_action")
-data class SocialAction (
+data class SocialAction(
     @ColumnInfo(name = "name")
     val name: String,
     @ColumnInfo(name = "year")
@@ -24,9 +24,16 @@ data class SocialAction (
     val region: String,
     @ColumnInfo(name = "administration")
     val administration: String
-    ){
-    @PrimaryKey //(autoGenerate = true)
+) {
+    /*  La ID está fuera del constructor porque para crear esta clase y enviarla a Firestore no ponemos ID,
+        dejamos que Firestore genere la ID única del documento y luego se la asignamos a esta clase
+     */
+    @PrimaryKey
     @ColumnInfo(name = "id")
     var id: String = ""
+
+    fun getAddressFormatted(): String {
+        return "$administration, $region, $country"
+    }
 }
 

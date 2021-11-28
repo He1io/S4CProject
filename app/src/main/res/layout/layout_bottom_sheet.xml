@@ -4,6 +4,7 @@
     android:id="@+id/bottomSheetContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/bottom_sheet_bg"
     android:padding="@dimen/margin">
 
@@ -11,11 +12,48 @@
         android:id="@+id/tv_social_action_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:layout_constraintHorizontal_weight="3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tv_social_action_year"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        tools:text="Nombre de la acción social"
         />
-    <!-- Por ahora Mostrar y Editar harían lo mismo así que lo obvio -->
+
+    <TextView
+        android:id="@+id/tv_social_action_year"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@id/tv_social_action_name"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="2000"
+        />
+
+    <TextView
+        android:id="@+id/tv_social_action_mode"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_between_elements"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_social_action_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="Modalidad"
+        />
+
+    <TextView
+        android:id="@+id/tv_social_action_address"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_between_elements"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_social_action_mode"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="Administración, Región, País"
+        />
+    <!-- Ahora Mostrar y Editar harían lo mismo así que lo obvio -->
     <!--
     <Button
         android:id="@+id/bt_show"
@@ -32,9 +70,10 @@
         android:id="@+id/bt_edit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_between_elements"
         android:layout_marginStart="@dimen/margin_between_elements"
         android:layout_marginEnd="@dimen/margin_between_elements"
-        app:layout_constraintTop_toBottomOf="@id/tv_social_action_name"
+        app:layout_constraintTop_toBottomOf="@id/tv_social_action_address"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/bt_delete"
         android:text="@string/edit"/>
@@ -44,7 +83,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_between_elements"
-        app:layout_constraintTop_toBottomOf="@id/tv_social_action_name"
+        app:layout_constraintTop_toTopOf="@id/bt_edit"
         app:layout_constraintStart_toEndOf="@id/bt_edit"
         app:layout_constraintEnd_toEndOf="parent"
         android:text="@string/delete"/>

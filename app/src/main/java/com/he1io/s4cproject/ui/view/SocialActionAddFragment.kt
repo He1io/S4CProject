@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -17,13 +16,8 @@ import com.he1io.s4cproject.R
 import com.he1io.s4cproject.data.model.SocialAction
 import com.he1io.s4cproject.databinding.FragmentSocialActionAddBinding
 import com.he1io.s4cproject.util.Mode
-import kotlinx.coroutines.launch
 
 class SocialActionAddFragment : Fragment() {
-
-    companion object {
-        private const val TAG = "SocialActionAddFragment"
-    }
 
     private val navigationArgs: SocialActionAddFragmentArgs by navArgs()
 
@@ -31,8 +25,7 @@ class SocialActionAddFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val db = Firebase.firestore
-
-    val firestoreViewModel = FirestoreViewModel()
+    private val firestoreViewModel = FirestoreViewModel()
 
     private lateinit var mode: Mode
 
@@ -55,20 +48,12 @@ class SocialActionAddFragment : Fragment() {
         socialActionId = navigationArgs.socialActionId
         mode = if (socialActionId.isNullOrBlank()) Mode.INSERT else Mode.UPDATE
 
-        when (mode) {
-            Mode.UPDATE -> {
-                firestoreViewModel.getSocialActionById(socialActionId).observe(viewLifecycleOwner) {
-                    bind(it)
-                }
-            }
-
-            Mode.INSERT -> {
-
-            }
-            else -> {
-
+        if (mode == Mode.UPDATE) {
+            firestoreViewModel.getSocialActionById(socialActionId).observe(viewLifecycleOwner) {
+                bind(it)
             }
         }
+
         binding.apply()
         {
             fabSaveSocialAction.setOnClickListener {
@@ -148,13 +133,5 @@ class SocialActionAddFragment : Fragment() {
             etSocialActionRegion.setText(socialAction.region)
             etSocialActionAdministration.setText(socialAction.administration)
         }
-    }
-
-    private fun saveSocialAction(socialAction: SocialAction) {
-        db.collection("social_action")
-            .add(socialAction)
-            .addOnSuccessListener { documentReference ->
-                socialAction.id = documentReference.id
-            }
     }
 }

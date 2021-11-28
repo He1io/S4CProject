@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -17,9 +16,9 @@ import com.google.firebase.ktx.Firebase
 import com.he1io.s4cproject.util.CustomAdapter
 import com.he1io.s4cproject.ui.viewmodel.FirestoreViewModel
 import com.he1io.s4cproject.R
+import com.he1io.s4cproject.data.model.SocialAction
 import com.he1io.s4cproject.databinding.FragmentSocialActionSummaryBinding
 import com.he1io.s4cproject.databinding.LayoutBottomSheetBinding
-import com.he1io.s4cproject.util.Mode
 
 class SocialActionSummaryFragment : Fragment() {
 
@@ -27,10 +26,10 @@ class SocialActionSummaryFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var auth: FirebaseAuth
+    private val firestoreViewModel = FirestoreViewModel()
 
     private lateinit var adapter: CustomAdapter
 
-    private val firestoreViewModel = FirestoreViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,29 +51,11 @@ class SocialActionSummaryFragment : Fragment() {
             binding.btLogin.text = currentUser.email
         }
 
-
         // val adapter = SocialActionListAdapter()
         firestoreViewModel.getSavedSocialActions().observe(this.viewLifecycleOwner) {
             // adapter.submitList(it)
-            adapter = CustomAdapter(it) {currentAction ->
-                val bottomSheetDialog = BottomSheetDialog(
-                    requireActivity(),
-                    R.style.BottomSheetDialogTheme
-                )
-                val bottomSheetView = LayoutBottomSheetBinding.inflate(LayoutInflater.from(context))
-                bottomSheetDialog.setContentView(bottomSheetView.root)
-                bottomSheetDialog.show()
-
-                bottomSheetView.tvSocialActionName.text = currentAction.name
-                bottomSheetView.btEdit.setOnClickListener{
-                    goToAddSocialActionFragment(currentAction.id)
-                    bottomSheetDialog.dismiss()
-                }
-                bottomSheetView.btDelete.setOnClickListener{
-                    showDeleteConfirmationDialog(currentAction.id)
-                    bottomSheetDialog.dismiss()
-                }
-
+            adapter = CustomAdapter(it) { currentAction ->
+                showBottomSheetDialog(currentAction)
             }
             binding.rvSocialAction.adapter = adapter
             binding.rvSocialAction.layoutManager = LinearLayoutManager(context)
@@ -105,9 +86,11 @@ class SocialActionSummaryFragment : Fragment() {
         findNavController().navigate(action)
     }
 
-    private fun goToAddSocialActionFragment(socialActionId: String){
+    private fun goToAddSocialActionFragment(socialActionId: String) {
         val action =
-            SocialActionSummaryFragmentDirections.actionSocialActionSummaryFragmentToSocialActionAddFragment(socialActionId)
+            SocialActionSummaryFragmentDirections.actionSocialActionSummaryFragmentToSocialActionAddFragment(
+                socialActionId
+            )
         findNavController().navigate(action)
     }
 
@@ -119,13 +102,39 @@ class SocialActionSummaryFragment : Fragment() {
             .setNegativeButton("Cancelar") { _, _ -> }
             .setPositiveButton("Confirmar") { _, _ ->
 
-                        firestoreViewModel.deleteSocialAction(socialActionId)
-                        Toast.makeText(
-                            requireContext(),
-                            getString(R.string.delete_social_action_message),
-                            Toast.LENGTH_SHORT
-                        ).show()
+                firestoreViewModel.deleteSocialAction(socialActionId)
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.delete_social_action_message),
+                    Toast.LENGTH_SHORT
+                ).show()
 
             }.show()
+    }
+
+    private fun showBottomSheetDialog(currentAction: SocialAction) {
+        val bottomSheetDialog = BottomSheetDialog(
+            requireActivity(),
+            R.style.BottomSheetDialogTheme
+        )
+
+        val bottomSheetView = LayoutBottomSheetBinding.inflate(LayoutInflater.from(context))
+        bottomSheetDialog.setContentView(bottomSheetView.root)
+        bottomSheetDialog.show()
+
+        bottomSheetView.apply {
+            tvSocialActionName.text = currentAction.name
+            tvSocialActionYear.text = currentAction.year.toString()
+            tvSocialActionMode.text = currentAction.mode
+            tvSocialActionAddress.text = currentAction.getAddressFormatted()
+            btEdit.setOnClickListener {
+                goToAddSocialActionFragment(currentAction.id)
+                bottomSheetDialog.dismiss()
+            }
+            btDelete.setOnClickListener {
+                showDeleteConfirmationDialog(currentAction.id)
+                bottomSheetDialog.dismiss()
+            }
+        }
     }
 }

@@ -34,40 +34,48 @@ class LoginDialogFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         auth = Firebase.auth
 
         binding.apply {
             btLogin.setOnClickListener {
-                if (isLogInValid()){
-                    auth.signInWithEmailAndPassword(etEmail.text.toString(), etPassword.text.toString())
+                if (isLogInValid()) {
+                    auth.signInWithEmailAndPassword(
+                        etEmail.text.toString(),
+                        etPassword.text.toString()
+                    )
                         .addOnCompleteListener(requireActivity()) { task ->
                             if (task.isSuccessful) {
-                                Log.d(TAG, "signInWithEmail:success")
-                                val action = LoginDialogFragmentDirections.actionLoginDialogFragmentToSocialActionSummaryFragment2()
-                                findNavController().navigate(action)
+                                goToSocialActionSummaryFragment()
                             } else {
-                                Log.w(TAG, "signInWithEmail:failure", task.exception)
-                                Toast.makeText(requireContext(), "Fallo al iniciar sesión, compruebe sus credenciales",
-                                    Toast.LENGTH_SHORT).show()
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Fallo al iniciar sesión, compruebe sus credenciales",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
                         }
                 }
             }
 
             btSignup.setOnClickListener {
-                if(isLogInValid()){
+                if (isLogInValid()) {
 
-                    auth.createUserWithEmailAndPassword(etEmail.text.toString(), etPassword.text.toString())
+                    auth.createUserWithEmailAndPassword(
+                        etEmail.text.toString(),
+                        etPassword.text.toString()
+                    )
                         .addOnCompleteListener(requireActivity()) { task ->
                             if (task.isSuccessful) {
-                                Log.d(TAG, "createUserWithEmail:success")
-                                val action = LoginDialogFragmentDirections.actionLoginDialogFragmentToSocialActionSummaryFragment2()
-                                findNavController().navigate(action)
+                               goToSocialActionSummaryFragment()
                             } else {
                                 //TODO: Check existing user
                                 Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                                Toast.makeText(requireContext(), "Ha habido un fallo. Inténtelo de nuevo por favor",
-                                    Toast.LENGTH_SHORT).show()
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Ha habido un fallo. Inténtelo de nuevo por favor",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
                         }
                 }
@@ -86,7 +94,8 @@ class LoginDialogFragment : Fragment() {
             }
 
             // Comprobar formato del mail
-            !android.util.Patterns.EMAIL_ADDRESS.matcher(binding.etEmail.text.toString()).matches() -> {
+            !android.util.Patterns.EMAIL_ADDRESS.matcher(binding.etEmail.text.toString())
+                .matches() -> {
                 binding.tilEmail.error = getString(R.string.email_bad_format)
                 isValid = false
             }
@@ -102,5 +111,11 @@ class LoginDialogFragment : Fragment() {
         }
 
         return isValid
+    }
+
+    private fun goToSocialActionSummaryFragment(){
+        val action =
+            LoginDialogFragmentDirections.actionLoginDialogFragmentToSocialActionSummaryFragment()
+        findNavController().navigate(action)
     }
 }

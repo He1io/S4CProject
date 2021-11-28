@@ -10,8 +10,11 @@ import com.he1io.s4cproject.data.model.SocialAction
 
 class FirestoreRepository {
 
-    val TAG = "FIREBASE_REPOSITORY"
-    val firestoreDB = FirebaseFirestore.getInstance()
+    companion object {
+        private const val TAG = "FIREBASE_REPOSITORY"
+    }
+
+    private val firestoreDB = FirebaseFirestore.getInstance()
 
     fun getSocialActionById(socialActionId: String): DocumentReference {
         return firestoreDB.collection("social_action").document(socialActionId)
@@ -22,8 +25,7 @@ class FirestoreRepository {
     }
 
     fun saveSocialAction(socialAction: SocialAction): Task<Void> {
-        //var
-        var documentReference = firestoreDB.collection("social_action").document()
+        val documentReference = firestoreDB.collection("social_action").document()
         socialAction.id = documentReference.id
         return documentReference.set(socialAction)
     }

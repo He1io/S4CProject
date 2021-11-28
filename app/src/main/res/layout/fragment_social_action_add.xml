@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/margin">
 
     <!-- TODO: Coger Strings de los recursos -->
     <com.google.android.material.textfield.TextInputLayout
@@ -11,9 +12,11 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:layout_constraintHorizontal_weight="3"
         android:layout_marginTop="@dimen/margin_between_elements"
+        android:layout_marginEnd="@dimen/margin_between_elements"
         android:hint="Nombre"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/til_social_action_year"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -28,16 +31,18 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_between_elements"
+        app:layout_constraintHorizontal_weight="1"
+        android:layout_marginStart="@dimen/margin_between_elements"
         android:hint="Año"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/til_social_action_name">
+        app:layout_constraintStart_toEndOf="@id/til_social_action_name"
+        app:layout_constraintTop_toTopOf="@id/til_social_action_name">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_social_action_year"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="number"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -80,8 +85,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_between_elements"
+        android:layout_marginEnd="@dimen/margin_between_elements"
         android:hint="Subvención"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/til_social_action_spending"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/til_social_action_project">
 
@@ -97,11 +103,11 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_between_elements"
+        android:layout_marginStart="@dimen/margin_between_elements"
         android:hint="Gasto"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/til_social_action_subvention">
+        app:layout_constraintStart_toEndOf="@id/til_social_action_subvention"
+        app:layout_constraintTop_toTopOf="@id/til_social_action_subvention">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_social_action_spending"
@@ -165,8 +171,7 @@
         android:id="@+id/fab_save_social_action"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/margin"
-        android:layout_marginBottom="@dimen/margin"
+
         android:src="@drawable/ic_save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -21,7 +21,7 @@
         android:name="com.he1io.s4cproject.ui.view.LoginDialogFragment"
         android:label="LoginDialogFragment" >
         <action
-            android:id="@+id/action_loginDialogFragment_to_socialActionSummaryFragment2"
+            android:id="@+id/action_loginDialogFragment_to_socialActionSummaryFragment"
             app:destination="@id/socialActionSummaryFragment" />
     </fragment>
     <fragment
