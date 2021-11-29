@@ -3,34 +3,34 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/socialActionSummaryFragment">
+    app:startDestination="@id/displayMapFragment">
 
     <fragment
-        android:id="@+id/socialActionSummaryFragment"
-        android:name="com.he1io.s4cproject.ui.view.SocialActionSummaryFragment"
-        android:label="">
+        android:id="@+id/displayMapFragment"
+        android:name="com.he1io.s4cproject.ui.view.DisplayMapFragment">
         <action
-            android:id="@+id/action_socialActionSummaryFragment_to_loginDialogFragment"
+            android:id="@+id/action_displayMapFragment_to_loginDialogFragment"
             app:destination="@id/loginDialogFragment" />
         <action
-            android:id="@+id/action_socialActionSummaryFragment_to_socialActionAddFragment"
+            android:id="@+id/action_displayMapFragment_to_socialActionAddFragment"
             app:destination="@id/socialActionAddFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/loginDialogFragment"
         android:name="com.he1io.s4cproject.ui.view.LoginDialogFragment"
-        android:label="LoginDialogFragment" >
+        android:label="LoginDialogFragment">
         <action
-            android:id="@+id/action_loginDialogFragment_to_socialActionSummaryFragment"
-            app:destination="@id/socialActionSummaryFragment" />
+            android:id="@+id/action_loginDialogFragment_to_displayMapFragment"
+            app:destination="@id/displayMapFragment" />
     </fragment>
     <fragment
         android:id="@+id/socialActionAddFragment"
         android:name="com.he1io.s4cproject.ui.view.SocialActionAddFragment"
-        android:label="SocialActionAddFragment" >
+        android:label="SocialActionAddFragment">
         <action
-            android:id="@+id/action_socialActionAddFragment_to_socialActionSummaryFragment"
-            app:destination="@id/socialActionSummaryFragment" />
+            android:id="@+id/action_socialActionAddFragment_to_displayMapFragment"
+            app:destination="@id/displayMapFragment" />
         <argument
             android:name="social_action_id"
             app:argType="string" />

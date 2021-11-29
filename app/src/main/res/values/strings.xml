@@ -12,8 +12,8 @@
     <string name="email_format_error">Formato incorrecto</string>
     <string name="password_null_error">Introduzca una contraseña</string>
     <string name="minimum_characters_error">La contraseña debe tener al menos 6 caracteres</string>
-
     <string name="required_field_error">Campo obligatorio</string>
+    <string name="invalid_address_error">Introduzca una dirección correcta</string>
     <!-- Buttons -->
     <string name="login_button">Iniciar Sesión</string>
     <string name="logout_button">Cerrar Sesión</string>
@@ -31,4 +31,6 @@
     <string name="country_hint">País</string>
     <string name="region_hint">Región</string>
     <string name="administration_hint">Administración</string>
+    <!-- Maps Api -->
+    <string name="maps_api_key">YOUR_GOOGLE_MAPS_API_KEY</string>
 </resources>

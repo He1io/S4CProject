@@ -1,5 +1,6 @@
 package com.he1io.s4cproject.ui.view
 
+import android.location.Geocoder
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.he1io.s4cproject.ui.viewmodel.FirestoreViewModel
@@ -32,11 +34,15 @@ class SocialActionAddFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val firestoreViewModel = FirestoreViewModel()
+
+    /* Con roomViewModel podríamos coger la Acción Social del caché interno, pero por ahora seguimos cogiéndola de FireStore o su caché
     private val roomViewModel: RoomViewModel by activityViewModels {
         RoomViewModelFactory(
             (activity?.application as S4CApplication).database.socialActionDao()
         )
     }
+    */
+
 
     private lateinit var mode: Mode
 
@@ -74,7 +80,6 @@ class SocialActionAddFragment : Fragment() {
             }
         }
     }
-
 
     private fun isSocialActionValid(): Boolean {
         var isValid = true
@@ -117,6 +122,12 @@ class SocialActionAddFragment : Fragment() {
 
             binding.etSocialActionRegion.text.toString().isBlank() -> {
                 binding.etSocialActionRegion.error = getString(R.string.required_field_error)
+                isValid = false
+            }
+
+            // Como estoy sacando la ubicación del mapa del campo REGION, comprobar que se pueda sacar Latitud y Longitud del texto que escriban
+            !isAddressValid(binding.etSocialActionRegion.text.toString()) -> {
+                binding.etSocialActionRegion.error = getString(R.string.invalid_address_error)
                 isValid = false
             }
 
@@ -191,5 +202,9 @@ class SocialActionAddFragment : Fragment() {
             etSocialActionRegion.setText(socialAction.region)
             etSocialActionAdministration.setText(socialAction.administration)
         }
+    }
+
+    private fun isAddressValid(strAddress: String): Boolean {
+        return Geocoder(requireContext()).getFromLocationName(strAddress, 5).isNotEmpty()
     }
 }

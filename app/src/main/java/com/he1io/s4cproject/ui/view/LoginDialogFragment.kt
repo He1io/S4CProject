@@ -118,7 +118,7 @@ class LoginDialogFragment : Fragment() {
 
     private fun goToSocialActionSummaryFragment(){
         val action =
-            LoginDialogFragmentDirections.actionLoginDialogFragmentToSocialActionSummaryFragment()
+            LoginDialogFragmentDirections.actionLoginDialogFragmentToDisplayMapFragment()
         findNavController().navigate(action)
     }
 }
