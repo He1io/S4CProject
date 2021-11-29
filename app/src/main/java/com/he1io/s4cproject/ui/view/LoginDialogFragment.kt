@@ -49,7 +49,7 @@ class LoginDialogFragment : Fragment() {
                     )
                         .addOnCompleteListener(requireActivity()) { task ->
                             if (task.isSuccessful) {
-                                goToSocialActionSummaryFragment()
+                                goToDisplayMapFragment()
                             } else {
                                 Toast.makeText(
                                     requireContext(),
@@ -70,7 +70,7 @@ class LoginDialogFragment : Fragment() {
                     )
                         .addOnCompleteListener(requireActivity()) { task ->
                             if (task.isSuccessful) {
-                               goToSocialActionSummaryFragment()
+                                goToDisplayMapFragment()
                             } else {
                                 // TODO: Comprobar que intente registrar un usuario ya existente
                                 Log.w(TAG, "createUserWithEmail:failure", task.exception)
@@ -116,7 +116,7 @@ class LoginDialogFragment : Fragment() {
         return isValid
     }
 
-    private fun goToSocialActionSummaryFragment(){
+    private fun goToDisplayMapFragment(){
         val action =
             LoginDialogFragmentDirections.actionLoginDialogFragmentToDisplayMapFragment()
         findNavController().navigate(action)
