@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -52,13 +51,15 @@ class DisplayMapFragment : Fragment() {
         )
     }
 
+    private lateinit var googleMap: GoogleMap
+    private val mapZoom = 5f
+    private val animationDuration = 4000
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-
-    val requestPermissionLauncher =
+    private val requestPermissionLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestPermission()
-        ) { isGranted: Boolean ->
-            // TODO: Aquí debería hacer la animación de centrar la cámara para cuando acepten permisos
+        ) {isGranted ->
+            if (isGranted) centerCameraAnimation(googleMap, mapZoom, animationDuration)
         }
 
 
@@ -74,8 +75,6 @@ class DisplayMapFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
 
         auth = Firebase.auth
         var currentUser = auth.currentUser
@@ -103,45 +102,22 @@ class DisplayMapFragment : Fragment() {
             .observe(this.viewLifecycleOwner) { socialActionsList ->
                 // TODO:    Toda esta parte del mapa está hecha a la carrera, hay que limpiar y encapsular
                 //          También mirar posibilidades offline porque ahora mismo crashea
-                val map = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
-                map!!.getMapAsync { myMap ->
-                    myMap.mapType = GoogleMap.MAP_TYPE_NORMAL
-                    myMap.setOnMarkerClickListener { myMarker ->
+                val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+                mapFragment.getMapAsync { myMap ->
+                    googleMap = myMap
+                    googleMap.mapType = GoogleMap.MAP_TYPE_NORMAL
+                    googleMap.setOnMarkerClickListener { myMarker ->
                         showBottomSheetDialog(myMarker.tag as SocialAction)
                         true
                     }
-                    myMap.clear()
+                    googleMap.clear()
 
-                    if (ContextCompat.checkSelfPermission(
-                            requireContext(),
-                            Manifest.permission.ACCESS_FINE_LOCATION
-                        ) == PackageManager.PERMISSION_GRANTED
-                    ) {
-                        fusedLocationClient.lastLocation
-                            .addOnSuccessListener { location: Location? ->
-                                val googlePlex = CameraPosition.builder()
-                                    .target(LatLng(location!!.latitude, location.longitude))
-                                    .zoom(5f)
-                                    .bearing(0f)
-                                    .tilt(45f)
-                                    .build()
-
-                                myMap.animateCamera(
-                                    CameraUpdateFactory.newCameraPosition(googlePlex),
-                                    4000,
-                                    null
-                                )
-                            }
-                    } else {
-                        requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
-                    }
-
-
+                    centerCameraAnimation(googleMap, mapZoom, animationDuration)
 
                     if (socialActionsList.isNotEmpty()) {
                         for (socialAction in socialActionsList) {
                             val location = getLocationFromAddress(socialAction.region)
-                            myMap.addMarker(
+                            googleMap.addMarker(
                                 MarkerOptions()
                                     .position(LatLng(location.latitude, location.longitude))
                                     .title(socialAction.name)
@@ -154,7 +130,7 @@ class DisplayMapFragment : Fragment() {
         // Cuando haya actualizaciones en Firebase, actualizar el caché
         firestoreViewModel.getSavedSocialActions().observe(this.viewLifecycleOwner) {
             /*
-                TODO:    Evidentemente esto no puede hacerse así
+                TODO:    Esto no puede hacerse así
                          Siempre que haya un cambio borrar toda la BD y volver a crearla con los datos en la nube no es nada óptimo
                          Habría que implementar una lógica para que la sincronización entre remoto y local sea óptima
              */
@@ -220,12 +196,40 @@ class DisplayMapFragment : Fragment() {
 
 
     private fun getLocationFromAddress(strAddress: String): GeoPoint {
-        val coder = Geocoder(requireContext());
-        val address = coder.getFromLocationName(strAddress, 5);
+        val coder = Geocoder(requireContext())
+        val address = coder.getFromLocationName(strAddress, 5)
         val location = address[0]
         return GeoPoint(
             location.latitude,
             location.longitude
         )
+    }
+
+    private fun centerCameraAnimation(myMap: GoogleMap, zoom: Float, duration: Int){
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            fusedLocationClient.lastLocation
+                .addOnSuccessListener { location: Location? ->
+                    val googlePlex = CameraPosition.builder()
+                        .target(LatLng(location!!.latitude, location.longitude))
+                        .zoom(zoom)
+                        .bearing(0f)
+                        .tilt(45f)
+                        .build()
+
+                    myMap.animateCamera(
+                        CameraUpdateFactory.newCameraPosition(googlePlex),
+                        duration,
+                        null
+                    )
+                }
+        } else {
+            requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+        }
     }
 }
